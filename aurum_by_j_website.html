@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurum.by.j — Jewellery Just For You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #C9A96E;
+            --black: #1A1A1A;
+            --dark: #2D2D2D;
+            --gray: #888;
+            --light: #F5F0EB;
+            --white: #FFFFFF;
+            --cream: #FAF7F2;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--black); background: var(--white); overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
+
+        /* FAST Loader - Only 600ms */
+        .loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--black); display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-text {
+            font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold);
+            letter-spacing: 8px; animation: shimmer 1.2s infinite;
+        }
+        @keyframes shimmer { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+        /* Navigation */
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 20px 0;
+            transition: all 0.4s ease; background: transparent;
+        }
+        .navbar.scrolled {
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.08); padding: 12px 0;
+        }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600;
+            color: var(--white); letter-spacing: 3px; transition: color 0.3s; text-decoration: none;
+        }
+        .navbar.scrolled .logo { color: var(--black); }
+        .logo span { color: var(--gold); }
+        .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: var(--white); font-size: 0.9rem; font-weight: 500;
+            letter-spacing: 1px; text-transform: uppercase; position: relative; transition: color 0.3s;
+        }
+        .navbar.scrolled .nav-links a { color: var(--black); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--gold); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-icons { display: flex; gap: 25px; align-items: center; }
+        .nav-icons i { font-size: 1.2rem; color: var(--white); cursor: pointer; transition: color 0.3s; }
+        .navbar.scrolled .nav-icons i { color: var(--black); }
+        .nav-icons i:hover { color: var(--gold); }
+        .cart-count {
+            position: absolute; top: -8px; right: -8px; background: var(--gold); color: white;
+            font-size: 0.65rem; width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 600;
+        }
+        .cart-icon { position: relative; }
+
+        /* Search Overlay */
+        .search-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .search-overlay.active { opacity: 1; pointer-events: all; }
+        .search-box { width: 80%; max-width: 700px; position: relative; }
+        .search-box input {
+            width: 100%; padding: 25px 60px 25px 30px; font-size: 1.5rem; border: none;
+            border-bottom: 2px solid var(--gold); background: transparent; color: white;
+            font-family: 'Inter', sans-serif; outline: none;
+        }
+        .search-box input::placeholder { color: rgba(255,255,255,0.4); }
+        .search-box i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 1.5rem; }
+        .search-close { position: absolute; top: 40px; right: 40px; color: white; font-size: 2rem; cursor: pointer; transition: color 0.3s; }
+        .search-close:hover { color: var(--gold); }
+        .search-results { margin-top: 30px; max-height: 400px; overflow-y: auto; }
+        .search-result-item {
+            display: flex; align-items: center; padding: 15px; background: rgba(255,255,255,0.05);
+            margin-bottom: 10px; border-radius: 10px; cursor: pointer; transition: all 0.3s;
+        }
+        .search-result-item:hover { background: rgba(201,169,110,0.2); }
+        .search-result-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 20px; }
+        .search-result-item h4 { color: white; font-size: 1rem; margin-bottom: 5px; }
+        .search-result-item p { color: var(--gold); font-size: 0.9rem; }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh; position: relative; display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%); z-index: 1;
+        }
+        .hero-bg::before {
+            content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(201,169,110,0.15) 0%, transparent 70%);
+            border-radius: 50%; animation: float 8s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-30px, 30px); } }
+        .hero-content { position: relative; z-index: 2; text-align: center; max-width: 900px; padding: 0 20px; }
+        .hero-badge {
+            display: inline-block; padding: 10px 30px; border: 1px solid var(--gold); color: var(--gold);
+            font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 5rem); color: var(--white); line-height: 1.1; margin-bottom: 25px; animation: fadeInUp 1s ease 0.2s both; }
+        .hero h1 span { color: var(--gold); display: block; }
+        .hero p {
+            font-size: 1.1rem; color: rgba(255,255,255,0.7); margin-bottom: 40px; line-height: 1.8;
+            max-width: 600px; margin-left: auto; margin-right: auto; animation: fadeInUp 1s ease 0.4s both;
+        }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; animation: fadeInUp 1s ease 0.6s both; }
+        .btn {
+            padding: 16px 45px; font-size: 0.9rem; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; text-decoration: none; border-radius: 0; cursor: pointer;
+            transition: all 0.4s ease; border: 2px solid transparent; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .btn-primary { background: var(--gold); color: var(--black); border-color: var(--gold); }
+        .btn-primary:hover { background: transparent; color: var(--gold); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(201,169,110,0.3); }
+        .btn-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.3); }
+        .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Stats Bar */
+        .stats-bar { background: var(--black); padding: 40px 0; position: relative; z-index: 3; }
+        .stats-container {
+            max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 30px; padding: 0 40px; text-align: center;
+        }
+        .stat-item h3 { font-size: 2.5rem; color: var(--gold); margin-bottom: 5px; }
+        .stat-item p { color: rgba(255,255,255,0.6); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Section Styles */
+        .section { padding: 100px 0; max-width: 1400px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
+        .section-header { text-align: center; margin-bottom: 70px; }
+        .section-label { color: var(--gold); font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 15px; display: block; }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); color: var(--black); margin-bottom: 20px; }
+        .section-desc { color: var(--gray); max-width: 600px; margin: 0 auto; line-height: 1.8; }
+
+        /* Categories */
+        .categories { background: var(--cream); }
+        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .category-card { position: relative; height: 400px; overflow: hidden; cursor: pointer; border-radius: 4px; }
+        .category-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .category-card:hover img { transform: scale(1.1); }
+        .category-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 40px 25px 25px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); color: white;
+        }
+        .category-overlay h3 { font-size: 1.4rem; margin-bottom: 8px; }
+        .category-overlay p { font-size: 0.85rem; opacity: 0.8; }
+        .category-overlay .arrow {
+            position: absolute; right: 25px; bottom: 25px; width: 40px; height: 40px;
+            border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: var(--gold); transition: all 0.3s;
+        }
+        .category-card:hover .arrow { background: var(--gold); color: var(--black); }
+
+        /* Products */
+        .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .product-card {
+            background: var(--white); border-radius: 4px; overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.06); transition: all 0.4s ease; position: relative;
+        }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
+        .product-badge {
+            position: absolute; top: 15px; left: 15px; background: var(--gold); color: var(--black);
+            padding: 5px 15px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; z-index: 2;
+        }
+        .product-image { position: relative; height: 320px; overflow: hidden; background: var(--light); }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .product-card:hover .product-image img { transform: scale(1.08); }
+        .product-actions {
+            position: absolute; bottom: -60px; left: 0; right: 0; display: flex; justify-content: center;
+            gap: 10px; padding: 15px; background: rgba(255,255,255,0.95); transition: bottom 0.4s ease;
+        }
+        .product-card:hover .product-actions { bottom: 0; }
+        .action-btn {
+            width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--gold);
+            background: white; color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+        }
+        .action-btn:hover { background: var(--gold); color: var(--black); }
+        .product-info { padding: 25px; }
+        .product-info h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--black); }
+        .product-info .price { font-size: 1.2rem; color: var(--gold); font-weight: 600; }
+        .product-info .price .old { text-decoration: line-through; color: var(--gray); font-size: 0.95rem; margin-left: 10px; font-weight: 400; }
+
+        /* Gallery */
+        .gallery { background: var(--black); }
+        .gallery .section-title { color: var(--white); }
+        .gallery .section-desc { color: rgba(255,255,255,0.6); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 300px; gap: 15px; }
+        .gallery-item { position: relative; overflow: hidden; border-radius: 4px; cursor: pointer; }
+        .gallery-item:nth-child(1) { grid-row: span 2; }
+        .gallery-item:nth-child(4) { grid-row: span 2; }
+        .gallery-item:nth-child(5) { grid-column: span 2; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex;
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay i { color: white; font-size: 2rem; }
+
+        /* Features */
+        .features { background: var(--cream); }
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+        .feature-card {
+            text-align: center; padding: 50px 30px; background: var(--white); border-radius: 4px;
+            transition: all 0.4s; border: 1px solid transparent;
+        }
+        .feature-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
+        .feature-icon {
+            width: 80px; height: 80px; background: var(--light); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;
+            font-size: 1.8rem; color: var(--gold); transition: all 0.4s;
+        }
+        .feature-card:hover .feature-icon { background: var(--gold); color: var(--black); }
+        .feature-card h3 { font-size: 1.2rem; margin-bottom: 12px; }
+        .feature-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.7; }
+
+        /* Testimonials */
+        .testimonials { background: var(--white); }
+        .testimonial-slider { max-width: 800px; margin: 0 auto; text-align: center; position: relative; }
+        .testimonial-item { display: none; animation: fadeIn 0.6s; }
+        .testimonial-item.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .testimonial-item .stars { color: var(--gold); font-size: 1.2rem; margin-bottom: 25px; }
+        .testimonial-item p { font-size: 1.3rem; font-family: 'Playfair Display', serif; color: var(--dark); line-height: 1.8; margin-bottom: 30px; font-style: italic; }
+        .testimonial-item .author { font-weight: 600; color: var(--black); }
+        .testimonial-item .location { color: var(--gray); font-size: 0.9rem; }
+        .testimonial-dots { display: flex; justify-content: center; gap: 12px; margin-top: 40px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--light); cursor: pointer; transition: all 0.3s; }
+        .dot.active { background: var(--gold); transform: scale(1.2); }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--black) 0%, var(--dark) 100%); padding: 100px 40px;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .cta::before {
+            content: ''; position: absolute; top: -100px; left: -100px; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(201,169,110,0.1) 0%, transparent 70%);
+        }
+        .cta h2 { font-size: clamp(2rem, 4vw, 3.5rem); color: var(--white); margin-bottom: 20px; position: relative; z-index: 1; }
+        .cta p { color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 40px; line-height: 1.8; position: relative; z-index: 1; }
+
+        /* Newsletter */
+        .newsletter { background: var(--gold); padding: 80px 40px; text-align: center; }
+        .newsletter h2 { font-size: 2rem; color: var(--black); margin-bottom: 15px; }
+        .newsletter p { color: rgba(0,0,0,0.7); margin-bottom: 30px; }
+        .newsletter-form { max-width: 500px; margin: 0 auto; display: flex; gap: 0; }
+        .newsletter-form input { flex: 1; padding: 18px 25px; border: none; font-size: 1rem; outline: none; }
+        .newsletter-form button { padding: 18px 35px; background: var(--black); color: white; border: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+        .newsletter-form button:hover { background: var(--dark); }
+
+        /* Footer */
+        .footer { background: var(--black); color: var(--white); padding: 80px 0 30px; }
+        .footer-grid {
+            max-width: 1400px; margin: 0 auto; padding: 0 40px; display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px;
+        }
+        .footer-brand .logo { margin-bottom: 20px; display: inline-block; }
+        .footer-brand p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 25px; }
+        .social-links { display: flex; gap: 15px; }
+        .social-links a {
+            width: 45px; height: 45px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: var(--white);
+            text-decoration: none; transition: all 0.3s;
+        }
+        .social-links a:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+        .footer-col h4 { font-size: 1rem; margin-bottom: 25px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a { color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
+        .footer-col a:hover { color: var(--gold); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
+            background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 2rem; box-shadow: 0 5px 25px rgba(37,211,102,0.4);
+            cursor: pointer; z-index: 999; transition: all 0.4s ease; text-decoration: none; animation: pulse 2s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 8px 35px rgba(37,211,102,0.6); }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 5px 25px rgba(37,211,102,0.4); } 50% { box-shadow: 0 5px 40px rgba(37,211,102,0.7); } }
+        .whatsapp-tooltip {
+            position: absolute; right: 75px; top: 50%; transform: translateY(-50%);
+            background: var(--black); color: white; padding: 10px 20px; border-radius: 8px;
+            font-size: 0.85rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .whatsapp-float:hover .whatsapp-tooltip { opacity: 1; }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed; top: 0; right: -450px; width: 450px; height: 100%; background: var(--white);
+            z-index: 3000; box-shadow: -10px 0 50px rgba(0,0,0,0.2); transition: right 0.4s ease;
+            display: flex; flex-direction: column;
+        }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { padding: 30px; border-bottom: 1px solid var(--light); display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h3 { font-size: 1.3rem; }
+        .cart-close { font-size: 1.5rem; cursor: pointer; color: var(--gray); transition: color 0.3s; }
+        .cart-close:hover { color: var(--black); }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px 30px; }
+        .cart-item { display: flex; gap: 15px; padding: 20px 0; border-bottom: 1px solid var(--light); }
+        .cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; }
+        .cart-item-info { flex: 1; }
+        .cart-item-info h4 { font-size: 0.95rem; margin-bottom: 5px; }
+        .cart-item-info p { color: var(--gold); font-weight: 600; }
+        .cart-item-remove { color: var(--gray); cursor: pointer; transition: color 0.3s; }
+        .cart-item-remove:hover { color: #e74c3c; }
+        .cart-footer { padding: 30px; border-top: 1px solid var(--light); background: var(--cream); }
+        .cart-total { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 1.1rem; }
+        .cart-total span:last-child { font-weight: 700; color: var(--gold); }
+        .checkout-btn {
+            width: 100%; padding: 18px; background: var(--gold); color: var(--black); border: none;
+            font-size: 1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+        }
+        .checkout-btn:hover { background: var(--black); color: var(--gold); }
+        .cart-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2999;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s;
+        }
+        .cart-overlay.active { opacity: 1; pointer-events: all; }
+
+        /* Payment Modal */
+        .payment-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 4000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s;
+        }
+        .payment-modal.active { opacity: 1; pointer-events: all; }
+        .payment-box { background: var(--white); width: 90%; max-width: 500px; border-radius: 8px; overflow: hidden; transform: scale(0.9); transition: transform 0.4s; }
+        .payment-modal.active .payment-box { transform: scale(1); }
+        .payment-header { background: var(--black); color: white; padding: 25px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .payment-header h3 { font-size: 1.2rem; }
+        .payment-body { padding: 30px; }
+        .payment-options { display: grid; gap: 15px; margin-bottom: 25px; }
+        .payment-option {
+            display: flex; align-items: center; gap: 15px; padding: 20px; border: 2px solid var(--light);
+            border-radius: 8px; cursor: pointer; transition: all 0.3s;
+        }
+        .payment-option:hover, .payment-option.selected { border-color: var(--gold); background: rgba(201,169,110,0.05); }
+        .payment-option i { font-size: 1.5rem; color: var(--gold); width: 40px; }
+        .payment-option h4 { font-size: 1rem; margin-bottom: 3px; }
+        .payment-option p { font-size: 0.85rem; color: var(--gray); }
+        .pay-now-btn {
+            width: 100%; padding: 18px; background: var(--gold); color: var(--black); border: none;
+            border-radius: 4px; font-size: 1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+        }
+        .pay-now-btn:hover { background: var(--black); color: var(--gold); }
+
+        /* Product Modal */
+        .product-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 3500;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s; padding: 20px;
+        }
+        .product-modal.active { opacity: 1; pointer-events: all; }
+        .product-modal-box { background: var(--white); width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+        .product-modal-img { background: var(--light); min-height: 400px; }
+        .product-modal-img img { width: 100%; height: 100%; object-fit: cover; }
+        .product-modal-info { padding: 50px; display: flex; flex-direction: column; }
+        .product-modal-close {
+            position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+            background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.2rem; z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .product-modal-info h2 { font-size: 1.8rem; margin-bottom: 10px; }
+        .product-modal-info .price { font-size: 1.5rem; color: var(--gold); font-weight: 700; margin-bottom: 20px; }
+        .product-modal-info .desc { color: var(--gray); line-height: 1.8; margin-bottom: 25px; }
+        .product-meta { margin-bottom: 25px; }
+        .product-meta-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--light); font-size: 0.9rem; }
+        .product-meta-item span:first-child { color: var(--gray); }
+        .product-meta-item span:last-child { font-weight: 600; }
+        .quantity-selector { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .qty-btn { width: 40px; height: 40px; border: 1px solid var(--light); background: white; cursor: pointer; font-size: 1.2rem; transition: all 0.3s; }
+        .qty-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .qty-value { font-size: 1.1rem; font-weight: 600; min-width: 30px; text-align: center; }
+        .add-to-cart-btn {
+            padding: 18px; background: var(--gold); color: var(--black); border: none;
+            font-size: 1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; margin-bottom: 15px;
+        }
+        .add-to-cart-btn:hover { background: var(--black); color: var(--gold); }
+        .buy-now-btn {
+            padding: 18px; background: var(--black); color: var(--white); border: none;
+            font-size: 1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+        }
+        .buy-now-btn:hover { background: var(--gold); color: var(--black); }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: var(--black); color: white; padding: 15px 30px; border-radius: 8px;
+            font-size: 0.95rem; z-index: 5000; opacity: 0; transition: all 0.4s ease; display: flex; align-items: center; gap: 10px;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast i { color: var(--gold); }
+
+        /* Mobile */
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--white); cursor: pointer; }
+        .navbar.scrolled .mobile-menu-btn { color: var(--black); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--light); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+        /* Reveal */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .categories-grid, .products-grid, .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-item:nth-child(1), .gallery-item:nth-child(4) { grid-row: span 1; }
+            .gallery-item:nth-child(5) { grid-column: span 2; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .stats-container { grid-template-columns: repeat(2, 1fr); }
+            .categories-grid, .products-grid, .features-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-item:nth-child(5) { grid-column: span 1; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .cart-sidebar { width: 100%; right: -100%; }
+            .product-modal-box { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FAST Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-text">AURUM.BY.J</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">AURUM<span>.BY.J</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#products">Collection</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#features">Why Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <i class="fas fa-search" onclick="openSearch()"></i>
+                <div class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <i class="fas fa-bars mobile-menu-btn"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <i class="fas fa-times search-close" onclick="closeSearch()"></i>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search for necklaces, earrings, rings..." oninput="performSearch()">
+            <i class="fas fa-search"></i>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <i class="fas fa-times cart-close" onclick="toggleCart()"></i>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="text-align:center; color:var(--gray); padding:40px 0;">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartTotal">₹0</span>
+            </div>
+            <button class="checkout-btn" onclick="openPayment()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-box">
+            <div class="payment-header">
+                <h3><i class="fas fa-credit-card"></i> Secure Payment</h3>
+                <i class="fas fa-times" onclick="closePayment()" style="cursor:pointer;"></i>
+            </div>
+            <div class="payment-body">
+                <div class="payment-options">
+                    <div class="payment-option selected" onclick="selectPayment(this)">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div><h4>UPI / Google Pay / PhonePe</h4><p>Pay using any UPI app</p></div>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment(this)">
+                        <i class="fas fa-credit-card"></i>
+                        <div><h4>Credit / Debit Card</h4><p>Visa, Mastercard, RuPay</p></div>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment(this)">
+                        <i class="fas fa-university"></i>
+                        <div><h4>Net Banking</h4><p>All major banks supported</p></div>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment(this)">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div><h4>Cash on Delivery</h4><p>Pay when you receive</p></div>
+                    </div>
+                </div>
+                <button class="pay-now-btn" onclick="processPayment()">Pay Securely</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-box">
+            <div class="product-modal-close" onclick="closeProductModal()">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="product-modal-img">
+                <img src="" alt="" id="modalProductImg">
+            </div>
+            <div class="product-modal-info">
+                <h2 id="modalTitle">Product Name</h2>
+                <div class="price" id="modalPrice">₹0</div>
+                <p class="desc" id="modalDesc">Product description goes here.</p>
+                <div class="product-meta">
+                    <div class="product-meta-item"><span>Material</span><span id="modalMaterial">22K Gold Plated</span></div>
+                    <div class="product-meta-item"><span>Purity</span><span>92.5% Sterling Silver</span></div>
+                    <div class="product-meta-item"><span>Shipping</span><span>Free All Over India</span></div>
+                </div>
+                <div class="quantity-selector">
+                    <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                    <span class="qty-value" id="modalQty">1</span>
+                    <button class="qty-btn" onclick="changeQty(1)">+</button>
+                </div>
+                <button class="add-to-cart-btn" onclick="addToCartFromModal()">Add to Cart</button>
+                <button class="buy-now-btn" onclick="buyNow()">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Est. 2020 — Kanpur, India</div>
+            <h1>Jewellery <span>Just For You</span></h1>
+            <p>Handcrafted elegance meets timeless beauty. Discover our curated collection of premium jewellery, designed to make every moment sparkle. 1,560+ orders shipped across India.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">Explore Collection</a>
+                <a href="https://wa.me/9199XXXXXXXX?text=Hi%20Aurum.by.j!%20I'm%20interested%20in%20your%20jewellery%20collection.%20Can%20you%20help%20me%20find%20the%20perfect%20piece?" target="_blank" class="btn btn-outline"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stats-container">
+            <div class="stat-item"><h3>1,560+</h3><p>Orders Shipped</p></div>
+            <div class="stat-item"><h3>1,300+</h3><p>Happy Customers</p></div>
+            <div class="stat-item"><h3>200+</h3><p>Unique Designs</p></div>
+            <div class="stat-item"><h3>All India</h3><p>Free Shipping</p></div>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <section class="section categories" id="categories">
+        <div class="section-header reveal">
+            <span class="section-label">Browse By</span>
+            <h2 class="section-title">Our Categories</h2>
+            <p class="section-desc">From everyday essentials to statement pieces, find the perfect jewellery for every occasion.</p>
+        </div>
+        <div class="categories-grid reveal">
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600" alt="Necklaces">
+                <div class="category-overlay"><h3>Necklaces</h3><p>45+ Designs</p><div class="arrow"><i class="fas fa-arrow-right"></i></div></div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600" alt="Earrings">
+                <div class="category-overlay"><h3>Earrings</h3><p>80+ Designs</p><div class="arrow"><i class="fas fa-arrow-right"></i></div></div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600" alt="Rings">
+                <div class="category-overlay"><h3>Rings</h3><p>35+ Designs</p><div class="arrow"><i class="fas fa-arrow-right"></i></div></div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600" alt="Bracelets">
+                <div class="category-overlay"><h3>Bracelets</h3><p>25+ Designs</p><div class="arrow"><i class="fas fa-arrow-right"></i></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="section" id="products">
+        <div class="section-header reveal">
+            <span class="section-label">New Arrivals</span>
+            <h2 class="section-title">Featured Collection</h2>
+            <p class="section-desc">Handpicked pieces from our latest collection, crafted with precision and love.</p>
+        </div>
+        <div class="products-grid reveal" id="productsGrid"></div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section gallery" id="gallery">
+        <div class="section-header reveal">
+            <span class="section-label">Instagram</span>
+            <h2 class="section-title">Our Gallery</h2>
+            <p class="section-desc">A glimpse into our world — real customers, real moments, real sparkle.</p>
+        </div>
+        <div class="gallery-grid reveal">
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1515562149417-39151501685f?w=600" alt="Gallery 1"><div class="gallery-overlay"><i class="fab fa-instagram"></i></div></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600" alt="Gallery 2"><div class="gallery-overlay"><i class="fab fa-instagram"></i></div></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600" alt="Gallery 3"><div class="gallery-overlay"><i class="fab fa-instagram"></i></div></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600" alt="Gallery 4"><div class="gallery-overlay"><i class="fab fa-instagram"></i></div></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=600" alt="Gallery 5"><div class="gallery-overlay"><i class="fab fa-instagram"></i></div></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600" alt="Gallery 6"><div class="gallery-overlay"><i class="fab fa-instagram"></i></div></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600" alt="Gallery 7"><div class="gallery-overlay"><i class="fab fa-instagram"></i></div></div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section features" id="features">
+        <div class="section-header reveal">
+            <span class="section-label">Why Choose Us</span>
+            <h2 class="section-title">The Aurum Promise</h2>
+            <p class="section-desc">We go beyond selling jewellery — we create experiences that last a lifetime.</p>
+        </div>
+        <div class="features-grid reveal">
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-gem"></i></div><h3>Premium Quality</h3><p>92.5% sterling silver with 22K gold plating. Every piece is quality-checked before shipping.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-shipping-fast"></i></div><h3>Free Shipping</h3><p>Complimentary delivery across all of India. Track your order in real-time from our warehouse to your door.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Secure Payment</h3><p>Multiple payment options — UPI, Cards, Net Banking, COD. Your transactions are 100% secure.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-undo"></i></div><h3>Easy Returns</h3><p>Not satisfied? Return within 7 days, no questions asked. We believe in 100% customer happiness.</p></div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="section-header reveal">
+            <span class="section-label">Testimonials</span>
+            <h2 class="section-title">What Our Customers Say</h2>
+        </div>
+        <div class="testimonial-slider reveal">
+            <div class="testimonial-item active">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>"Absolutely in love with my necklace from Aurum.by.j! The craftsmanship is impeccable and it looks even better in person. Already placed my second order!"</p>
+                <div class="author">Priya Sharma</div><div class="location">Mumbai, Maharashtra</div>
+            </div>
+            <div class="testimonial-item">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>"The earrings I ordered were stunning! Packaging was beautiful and delivery was super fast. My go-to jewellery store now. Highly recommend!"</p>
+                <div class="author">Ananya Gupta</div><div class="location">Delhi, NCR</div>
+            </div>
+            <div class="testimonial-item">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>"Bought a ring for my anniversary and my wife was thrilled! The gold plating is still perfect after months of daily wear. Truly premium quality."</p>
+                <div class="author">Rahul Verma</div><div class="location">Bangalore, Karnataka</div>
+            </div>
+            <div class="testimonial-dots">
+                <span class="dot active" onclick="showTestimonial(0)"></span>
+                <span class="dot" onclick="showTestimonial(1)"></span>
+                <span class="dot" onclick="showTestimonial(2)"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="contact">
+        <h2>Ready to Sparkle?</h2>
+        <p>Join 1,300+ happy customers who trust Aurum.by.j for their jewellery needs. DM us on Instagram or WhatsApp for personalized recommendations.</p>
+        <a href="https://wa.me/9199XXXXXXXX?text=Hi%20Aurum.by.j!%20I'm%20interested%20in%20your%20jewellery%20collection.%20Can%20you%20help%20me%20find%20the%20perfect%20piece?" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <h2>Join the Aurum Family</h2>
+        <p>Subscribe for exclusive offers, new arrivals, and styling tips.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Thank you for subscribing!');">
+            <input type="email" placeholder="Enter your email address" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">AURUM<span>.BY.J</span></a>
+                <p>Handcrafted jewellery designed for the modern Indian woman. Every piece tells a story of elegance, tradition, and timeless beauty.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/aurum.by.j" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/9199XXXXXXXX" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">Necklaces</a></li>
+                    <li><a href="#">Earrings</a></li>
+                    <li><a href="#">Rings</a></li>
+                    <li><a href="#">Bracelets</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">Care Instructions</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="https://wa.me/9199XXXXXXXX"><i class="fab fa-whatsapp" style="margin-right:8px;"></i>+91 99XX XXX XXX</a></li>
+                    <li><a href="mailto:hello@aurumbyj.com"><i class="fas fa-envelope" style="margin-right:8px;"></i>hello@aurumbyj.com</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt" style="margin-right:8px;"></i>Kanpur, Uttar Pradesh</a></li>
+                    <li><a href="https://www.instagram.com/aurum.by.j" target="_blank"><i class="fab fa-instagram" style="margin-right:8px;"></i>@aurum.by.j</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Aurum.by.j — Jewellery Just For You. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/9199XXXXXXXX?text=Hi%20Aurum.by.j!%20I'm%20interested%20in%20your%20jewellery%20collection.%20Can%20you%20help%20me%20find%20the%20perfect%20piece?" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">Chat with us!</span>
+    </a>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg">Item added to cart!</span>
+    </div>
+
+    <script>
+        // ========== DATA ==========
+        const products = [
+            { id: 1, name: "Royal Kundan Necklace Set", price: 2499, oldPrice: 3499, image: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=600", category: "Necklaces", badge: "Bestseller", material: "22K Gold Plated Kundan", desc: "A stunning Kundan necklace set featuring intricate meenakari work. Perfect for weddings and festive occasions. Comes with matching earrings." },
+            { id: 2, name: "Pearl Drop Earrings", price: 899, oldPrice: 1299, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600", category: "Earrings", badge: "New", material: "Freshwater Pearls & Gold", desc: "Elegant freshwater pearl drop earrings with 22K gold plating. Lightweight and perfect for daily wear or special occasions." },
+            { id: 3, name: "Rose Gold Statement Ring", price: 1199, oldPrice: 1599, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600", category: "Rings", badge: "Trending", material: "Rose Gold Plated", desc: "A bold statement ring with cubic zirconia stones set in rose gold plating. Adjustable size for the perfect fit." },
+            { id: 4, name: "Temple Jewellery Bangles", price: 1899, oldPrice: 2499, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600", category: "Bracelets", badge: "Limited", material: "Antique Gold Finish", desc: "Traditional temple jewellery bangles with Lakshmi motif. Set of 4 bangles with intricate nakshi work." },
+            { id: 5, name: "Diamond Look Choker", price: 3299, oldPrice: 4499, image: "https://images.unsplash.com/photo-1515562149417-39151501685f?w=600", category: "Necklaces", badge: "Premium", material: "American Diamonds & Gold", desc: "Luxurious choker necklace with American diamonds and 22K gold plating. A showstopper piece for any celebration." },
+            { id: 6, name: "Jhumka Earrings", price: 1499, oldPrice: 1999, image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600", category: "Earrings", badge: "Popular", material: "Oxidized Silver & Gold", desc: "Traditional jhumka earrings with pearl drops and intricate filigree work. Lightweight and comfortable for all-day wear." },
+            { id: 7, name: "Minimalist Gold Chain", price: 799, oldPrice: 999, image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600", category: "Necklaces", badge: "Sale", material: "18K Gold Plated", desc: "A delicate minimalist chain perfect for layering or wearing solo. Waterproof and tarnish-resistant." },
+            { id: 8, name: "Bridal Maang Tikka", price: 2199, oldPrice: 2899, image: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=600", category: "Accessories", badge: "Wedding", material: "Kundan & Pearl", desc: "Exquisite bridal maang tikka with Kundan stones and pearl drops. The perfect finishing touch for your wedding look." }
+        ];
+
+        let cart = [];
+        let currentModalProduct = null;
+        let modalQty = 1;
+
+        // ========== FAST LOADER (600ms) ==========
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 600);
+        });
+
+        // ========== NAVBAR SCROLL ==========
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ========== RENDER PRODUCTS ==========
+        function renderProducts(filter = '') {
+            const grid = document.getElementById('productsGrid');
+            const filtered = filter 
+                ? products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()) || p.category.toLowerCase().includes(filter.toLowerCase()))
+                : products;
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="product-card" data-id="${p.id}">
+                    ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+                    <div class="product-image">
+                        <img src="${p.image}" alt="${p.name}">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="openProductModal(${p.id})" title="Quick View"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn" onclick="addToCart(${p.id})" title="Add to Cart"><i class="fas fa-shopping-bag"></i></button>
+                            <button class="action-btn" onclick="whatsappProduct('${p.name}')" title="Ask on WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>${p.name}</h3>
+                        <div class="price">₹${p.price.toLocaleString('en-IN')} <span class="old">₹${p.oldPrice.toLocaleString('en-IN')}</span></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        renderProducts();
+
+        // ========== SEARCH ==========
+        function openSearch() {
+            document.getElementById('searchOverlay').classList.add('active');
+            document.getElementById('searchInput').focus();
+        }
+        function closeSearch() {
+            document.getElementById('searchOverlay').classList.remove('active');
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+        }
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsDiv = document.getElementById('searchResults');
+            if (query.length < 2) { resultsDiv.innerHTML = ''; return; }
+            const matches = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+            if (matches.length === 0) {
+                resultsDiv.innerHTML = '<p style="color:rgba(255,255,255,0.5); text-align:center; padding:20px;">No products found</p>';
+                return;
+            }
+            resultsDiv.innerHTML = matches.map(p => `
+                <div class="search-result-item" onclick="openProductModal(${p.id}); closeSearch();">
+                    <img src="${p.image}" alt="${p.name}">
+                    <div><h4>${p.name}</h4><p>₹${p.price.toLocaleString('en-IN')} — ${p.category}</p></div>
+                </div>
+            `).join('');
+        }
+
+        // ========== PRODUCT MODAL ==========
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            currentModalProduct = product;
+            modalQty = 1;
+            document.getElementById('modalProductImg').src = product.image;
+            document.getElementById('modalTitle').textContent = product.name;
+            document.getElementById('modalPrice').textContent = '₹' + product.price.toLocaleString('en-IN');
+            document.getElementById('modalDesc').textContent = product.desc;
+            document.getElementById('modalMaterial').textContent = product.material;
+            document.getElementById('modalQty').textContent = modalQty;
+            document.getElementById('productModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function changeQty(delta) {
+            modalQty = Math.max(1, modalQty + delta);
+            document.getElementById('modalQty').textContent = modalQty;
+        }
+        function addToCartFromModal() {
+            if (currentModalProduct) {
+                addToCart(currentModalProduct.id, modalQty);
+                closeProductModal();
+            }
+        }
+        function buyNow() {
+            if (currentModalProduct) {
+                addToCart(currentModalProduct.id, modalQty);
+                closeProductModal();
+                openPayment();
+            }
+        }
+
+        // ========== CART ==========
+        function addToCart(id, qty = 1) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ ...product, qty });
+            }
+
+            updateCart();
+            showToast(product.name + ' added to cart!');
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.getElementById('cartTotal');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+
+            cartCount.textContent = count;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align:center; color:var(--gray); padding:40px 0;">Your cart is empty</p>';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>₹${item.price.toLocaleString('en-IN')} x ${item.qty}</p>
+                        </div>
+                        <i class="fas fa-trash cart-item-remove" onclick="removeFromCart(${item.id})"></i>
+                    </div>
+                `).join('');
+            }
+
+            cartTotal.textContent = '₹' + total.toLocaleString('en-IN');
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+            document.getElementById('cartOverlay').classList.toggle('active');
+            document.body.style.overflow = document.getElementById('cartSidebar').classList.contains('open') ? 'hidden' : '';
+        }
+
+        // ========== PAYMENT ==========
+        function openPayment() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!');
+                return;
+            }
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePayment() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function selectPayment(el) {
+            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function processPayment() {
+            closePayment();
+            toggleCart();
+            showToast('Order placed successfully! Check WhatsApp for confirmation.');
+
+            // WhatsApp order summary
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const items = cart.map(item => item.name + ' (x' + item.qty + ')').join(', ');
+            const msg = 'Hi Aurum.by.j! I just placed an order for: ' + items + '. Total: ₹' + total.toLocaleString('en-IN') + '. Please confirm my order.';
+
+            setTimeout(() => {
+                window.open('https://wa.me/9199XXXXXXXX?text=' + encodeURIComponent(msg), '_blank');
+            }, 1000);
+
+            cart = [];
+            updateCart();
+        }
+
+        // ========== WHATSAPP PRODUCT ==========
+        function whatsappProduct(name) {
+            const msg = 'Hi Aurum.by.j! I'm interested in the "' + name + '". Can you share more details and availability?';
+            window.open('https://wa.me/9199XXXXXXXX?text=' + encodeURIComponent(msg), '_blank');
+        }
+
+        // ========== TESTIMONIALS ==========
+        let currentTestimonial = 0;
+        function showTestimonial(index) {
+            const items = document.querySelectorAll('.testimonial-item');
+            const dots = document.querySelectorAll('.dot');
+
+            items.forEach(item => item.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            items[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentTestimonial = index;
+        }
+
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % 3;
+            showTestimonial(currentTestimonial);
+        }, 5000);
+
+        // ========== TOAST ==========
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ========== SCROLL REVEAL ==========
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ========== CLOSE MODALS ON ESCAPE ==========
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSearch();
+                closeProductModal();
+                closePayment();
+                if (document.getElementById('cartSidebar').classList.contains('open')) toggleCart();
+            }
+        });
+
+        // ========== GALLERY LIGHTBOX ==========
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                window.open('https://www.instagram.com/aurum.by.j', '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
