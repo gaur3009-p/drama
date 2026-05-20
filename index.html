@@ -1,5 +1,4 @@
-
-html_content = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1801,4 +1800,63 @@ html_content = '''<!DOCTYPE html>
                 price: 1199, originalPrice: 1599,
                 image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/646e3ed6ee5873eb96f51e0a610566a865f1d77a.jpg",
                 badge: "",
-                description: "Bold
+                description: "Bold oxidized statement earrings with turquoise stone center and pearl fringe. Adds the perfect pop of color to any outfit.",
+                features: ["Oxidized silver finish", "Turquoise center stone", "Pearl fringe detailing", "Hook closure", "Handcrafted"]
+            },
+            {
+                id: 4, name: "Silver Jhumka Hoops", category: "earrings",
+                price: 799, originalPrice: 1099,
+                image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/8e28f538ed21625d10aa4444ab781c6f3b3259b4.jpg",
+                badge: "",
+                description: "Classic oxidized silver jhumka hoop earrings with intricate filigree work. Lightweight and perfect for daily wear with a touch of tradition.",
+                features: ["Oxidized silver", "Filigree pattern", "Bell jhumka design", "French hook", "Hypoallergenic"]
+            },
+            {
+                id: 5, name: "Tribal Coin Necklace", category: "necklace",
+                price: 1899, originalPrice: 2499,
+                image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/0f18d84bca0f6555d5c7324e5915ef0795c0de9c.jpg",
+                badge: "Trending",
+                description: "Layered tribal oxidized necklace with coin pendants and adjustable fit. A boho-chic masterpiece for the modern nakhra.",
+                features: ["Layered design", "Coin pendants", "Adjustable length", "Oxidized finish", "Boho aesthetic"]
+            },
+            {
+                id: 6, name: "Peacock Feather Danglers", category: "earrings",
+                price: 999, originalPrice: 1399,
+                image: "https://kimi-web-img.moonshot.cn/img/images.meesho.com/e695a8a7b94ce9368c3c4f4c50fca42959f97740.webp",
+                badge: "",
+                description: "Elegant peacock feather-inspired oxidized dangler earrings with ghungroo beads. Perfect for festive evenings and celebrations.",
+                features: ["Peacock motif", "Ghungroo beads", "Oxidized silver", "Push-back closure", "Festive wear"]
+            },
+            {
+                id: 7, name: "Parrot & Ruby Danglers", category: "earrings",
+                price: 1299, originalPrice: 1799,
+                image: "https://kimi-web-img.moonshot.cn/img/romikas.com/2d5169a76246fb3746403b6fee56c7cc500d53b0.jpg",
+                badge: "Limited",
+                description: "Unique parrot motif oxidized earrings with ruby-colored stones and pearl drops. A conversation starter for sure!",
+                features: ["Parrot design", "Ruby colored stones", "Pearl accents", "Oxidized finish", "Statement piece"]
+            },
+            {
+                id: 8, name: "Boho Long Necklace Set", category: "necklace",
+                price: 2199, originalPrice: 2999,
+                image: "https://kimi-web-img.moonshot.cn/img/www.crunchyfashion.com/c1d9770d7f65b3d61e874d9defaacdfe93fc4f21.jpg",
+                badge: "",
+                description: "Long boho oxidized necklace with matching jhum
+
+... [truncated for display] ...
+
+    });
+        document.getElementById('checkoutModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeCheckout();
+        });
+
+        // ===== ESCAPE KEY =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeProductModal();
+                closeCheckout();
+                document.getElementById('cartSidebar').classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
