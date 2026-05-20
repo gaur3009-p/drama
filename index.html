@@ -1840,11 +1840,363 @@
                 price: 2199, originalPrice: 2999,
                 image: "https://kimi-web-img.moonshot.cn/img/www.crunchyfashion.com/c1d9770d7f65b3d61e874d9defaacdfe93fc4f21.jpg",
                 badge: "",
-                description: "Long boho oxidized necklace with matching jhum
+                description: "Long boho oxidized necklace with matching jhumka earrings. Features intricate enamel work in green and blue tones.",
+                features: ["Long necklace style", "Matching jhumkas", "Enamel work", "Adjustable dori", "Complete set"]
+            },
+            {
+                id: 9, name: "Floral Statement Ring", category: "ring",
+                price: 599, originalPrice: 899,
+                image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/16174c5f9982384453931a6822bbf6a936780e2f.jpg",
+                badge: "",
+                description: "Adjustable oxidized silver floral statement ring with embossed petal details. Stack it or wear it solo for maximum impact.",
+                features: ["Adjustable size", "Floral embossing", "Oxidized silver", "Comfort fit", "Stackable design"]
+            },
+            {
+                id: 10, name: "Antique Mandala Ring", category: "ring",
+                price: 699, originalPrice: 999,
+                image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/ca831207685ceed7114f7fc1861cab300ee36c1d.jpg",
+                badge: "New",
+                description: "Large antique oxidized silver mandala ring with beaded border. A true statement piece for your fingers.",
+                features: ["Mandala design", "Beaded border", "Oxidized antique finish", "Adjustable band", "Bold statement"]
+            },
+            {
+                id: 11, name: "Shankha Sterling Ring", category: "ring",
+                price: 1499, originalPrice: 1999,
+                image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/83d045a25b4ee5dc780f54b343aea1628fc19545.jpg",
+                badge: "Premium",
+                description: "925 sterling silver conch shell (shankha) statement ring. Minimal yet powerful design for the modern spiritual soul.",
+                features: ["925 Sterling silver", "Shankha design", "Minimal aesthetic", "Adjustable fit", "Premium quality"]
+            },
+            {
+                id: 12, name: "Leaf Charm Bracelet", category: "bracelet",
+                price: 799, originalPrice: 1099,
+                image: "https://kimi-web-img.moonshot.cn/img/i.ebayimg.com/3c697a9688746efd13d20a3642bfbd3ce5eca484.jpg",
+                badge: "",
+                description: "Delicate oxidized silver bracelet with leaf charms and feather details. Adjustable cuff style for a perfect fit.",
+                features: ["Leaf charms", "Feather accents", "Adjustable cuff", "Oxidized finish", "Nature inspired"]
+            },
+            {
+                id: 13, name: "Trishul Cuff Bracelet", category: "bracelet",
+                price: 899, originalPrice: 1299,
+                image: "https://kimi-web-img.moonshot.cn/img/img2.exportersindia.com/62f5507e064fc85b605450810dccdbf1461be4be.jpeg",
+                badge: "",
+                description: "Bold oxidized silver Trishul cuff bracelet with rudraksha accent. Unisex design for the spiritually inclined.",
+                features: ["Trishul design", "Rudraksha accent", "Unisex style", "Twisted wire detail", "Spiritual jewelry"]
+            },
+            {
+                id: 14, name: "Oxidized Maang Tikka", category: "maangtikka",
+                price: 699, originalPrice: 999,
+                image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/14ce8d91e89bf311008b96039b5ac4f8d7165c97.jpg",
+                badge: "",
+                description: "Elegant oxidized silver maang tikka with leaf chain and circular medallion. Perfect for weddings and festive occasions.",
+                features: ["Leaf chain design", "Circular medallion", "Oxidized finish", "Hook fastening", "Bridal essential"]
+            },
+            {
+                id: 15, name: "Mirror Maang Tikka", category: "maangtikka",
+                price: 799, originalPrice: 1099,
+                image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/27a2ca05e1287ea5d46f3831854e4bf1d651a625.jpg",
+                badge: "New",
+                description: "Boho oxidized maang tikka with mirror center and ghungroo drops. Adds the perfect ethnic touch to any outfit.",
+                features: ["Mirror centerpiece", "Ghungroo drops", "Boho style", "Oxidized silver", "Ethnic charm"]
+            },
+            {
+                id: 16, name: "Oxidized Hair Pin", category: "accessories",
+                price: 399, originalPrice: 599,
+                image: "https://kimi-web-img.moonshot.cn/img/5.imimg.com/1d02ece2016800d1500a1a3cad2d4927c3fe2f96.jpg",
+                badge: "",
+                description: "Handcrafted oxidized silver hair pin with sunburst floral design. The perfect accessory to elevate any hairstyle.",
+                features: ["Sunburst design", "Secure clasp", "Oxidized finish", "Hair accessory", "Versatile styling"]
+            },
+            {
+                id: 17, name: "Oxidized Payal Set", category: "accessories",
+                price: 1199, originalPrice: 1599,
+                image: "https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/63c9ebb0c8abf5553446932d91c73abe75eb44c0.jpg",
+                badge: "",
+                description: "Traditional oxidized silver anklet (payal) pair with intricate wave pattern and tiny bells. Melodious and beautiful.",
+                features: ["Pair of anklets", "Wave pattern", "Tiny bells", "Adjustable chain", "Traditional design"]
+            },
+            {
+                id: 18, name: "Red Stone Necklace Set", category: "necklace",
+                price: 1699, originalPrice: 2299,
+                image: "https://kimi-web-img.moonshot.cn/img/content.jdmagicbox.com/920aa518ee6d759e0ea18ec39ada0872fe20afa4.jpg",
+                badge: "",
+                description: "Stunning oxidized silver necklace set with bold red stone centerpiece and matching jhumka earrings. Royal elegance redefined.",
+                features: ["Red stone centerpiece", "Matching jhumkas", "Oxidized silver", "Adjustable length", "Royal look"]
+            }
+        ];
 
-... [truncated for display] ...
+        // ===== STATE =====
+        let cart = [];
+        let currentFilter = 'all';
 
-    });
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartUI();
+            initScrollReveal();
+            initNavbarScroll();
+        });
+
+        // ===== RENDER PRODUCTS =====
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('productsGrid');
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            grid.innerHTML = filtered.map(product => `
+                <div class="product-card reveal" data-category="${product.category}">
+                    <div class="product-image-wrap" onclick="openProductModal(${product.id})">
+                        <img src="${product.image}" alt="${product.name}" loading="lazy">
+                        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="event.stopPropagation(); addToCart(${product.id})" title="Add to Bag">
+                                <i class="fas fa-shopping-bag"></i>
+                            </button>
+                            <button class="action-btn" onclick="event.stopPropagation(); openProductModal(${product.id})" title="Quick View">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn" onclick="event.stopPropagation(); enquireWhatsApp(${product.id})" title="Enquire on WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info" onclick="openProductModal(${product.id})">
+                        <p class="product-category">${product.category}</p>
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-price">
+                            ₹${product.price}
+                            ${product.originalPrice ? `<span class="original">₹${product.originalPrice}</span>` : ''}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Re-init scroll reveal for new elements
+            setTimeout(initScrollReveal, 100);
+        }
+
+        // ===== FILTER PRODUCTS =====
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category === 'all' ? 'all' : category)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderProducts(category);
+            
+            // Scroll to products if not already there
+            if (window.scrollY < document.getElementById('products').offsetTop - 200) {
+                document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // ===== PRODUCT MODAL =====
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <button class="modal-close" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
+                <div class="modal-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="modal-details">
+                    <p class="modal-category">${product.category}</p>
+                    <h2 class="modal-title">${product.name}</h2>
+                    <p class="modal-price">
+                        ₹${product.price}
+                        ${product.originalPrice ? `<span style="text-decoration: line-through; color: var(--text-muted); font-weight: 400; margin-left: 10px; font-size: 1rem;">₹${product.originalPrice}</span>` : ''}
+                    </p>
+                    <p class="modal-description">${product.description}</p>
+                    <ul class="modal-features">
+                        ${product.features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                    <div class="modal-buttons">
+                        <button class="btn-add-cart" onclick="addToCart(${product.id}); closeProductModal();">
+                            <i class="fas fa-shopping-bag"></i> Add to Bag
+                        </button>
+                        <a href="https://wa.me/917521900880?text=Hi%20Drama%20On%20The%20Go!%20I%20want%20to%20buy%20${encodeURIComponent(product.name)}%20(₹${product.price})%20%F0%9F%92%8E" 
+                           class="btn-whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                        </a>
+                        <a href="https://www.instagram.com/dramaonthego.in" 
+                           class="btn-instagram" target="_blank">
+                            <i class="fab fa-instagram"></i> DM on Instagram
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ===== CART FUNCTIONS =====
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            
+            updateCartUI();
+            showToast(`${product.name} added to your bag!`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cartCount');
+            const itemsEl = document.getElementById('cartItems');
+            const footerEl = document.getElementById('cartFooter');
+            const totalEl = document.getElementById('cartTotal');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            countEl.textContent = totalItems;
+            countEl.style.display = totalItems > 0 ? 'flex' : 'none';
+            
+            if (cart.length === 0) {
+                itemsEl.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-bag"></i>
+                        <p>Your bag is empty</p>
+                        <p style="font-size: 0.8rem; margin-top: 10px;">Add some drama to your collection!</p>
+                    </div>
+                `;
+                footerEl.style.display = 'none';
+            } else {
+                itemsEl.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <p class="cart-item-name">${item.name}</p>
+                            <p class="cart-item-price">₹${item.price} ${item.qty > 1 ? `x ${item.qty}` : ''}</p>
+                            <button class="cart-item-remove" onclick="removeFromCart(${item.id})">
+                                <i class="fas fa-trash-alt"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                footerEl.style.display = 'block';
+                totalEl.textContent = `₹${totalPrice.toLocaleString('en-IN')}`;
+            }
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+        }
+
+        // ===== CHECKOUT =====
+        function openCheckout() {
+            document.getElementById('cartSidebar').classList.remove('open');
+            document.getElementById('checkoutModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function selectPayment(el) {
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function processCheckout(e) {
+            e.preventDefault();
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const itemsList = cart.map(item => `${item.name} (₹${item.price} x ${item.qty})`).join('%0A');
+            
+            // Build WhatsApp message with order details
+            const message = `Hi Drama On The Go!%0A%0AI want to place an order:%0A%0A${itemsList}%0A%0ATotal: ₹${total.toLocaleString('en-IN')}%0A%0AI just filled the checkout form on your website. Please confirm my order!%0A%0AThank you! 💎`;
+            
+            window.open(`https://wa.me/917521900880?text=${message}`, '_blank');
+            
+            showToast('Redirecting to WhatsApp to complete your order!');
+            closeCheckout();
+            cart = [];
+            updateCartUI();
+        }
+
+        function orderViaWhatsApp() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const itemsList = cart.map(item => `• ${item.name} - ₹${item.price}`).join('%0A');
+            const message = `Hi Drama On The Go!%0A%0AI want to order:%0A%0A${itemsList}%0A%0ATotal: ₹${total.toLocaleString('en-IN')}%0A%0APlease share payment details! 💎`;
+            window.open(`https://wa.me/917521900880?text=${message}`, '_blank');
+        }
+
+        function enquireWhatsApp(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            const message = `Hi Drama On The Go!%0A%0AI'm interested in ${encodeURIComponent(product.name)} (₹${product.price}).%0A%0ACan you share more details and availability?%0A%0AThank you! 💎`;
+            window.open(`https://wa.me/917521900880?text=${message}`, '_blank');
+        }
+
+        // ===== MOBILE MENU =====
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+
+        // ===== NAVBAR SCROLL =====
+        function initNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // ===== SCROLL REVEAL =====
+        function initScrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            reveals.forEach(el => observer.observe(el));
+        }
+
+        // ===== TOAST =====
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ===== CLOSE MODALS ON BACKDROP CLICK =====
+        document.getElementById('productModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeProductModal();
+        });
         document.getElementById('checkoutModal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeCheckout();
         });
